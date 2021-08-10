@@ -1,131 +1,77 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace AddressBookSystem
 {
     class Program
     {
-        public string firstName;
-        public string lastName;
-        public string address;
-        public string city;
-        public string state;
-        public int zipCode;
-        public int phoneNumber;
-        public string emailId;
+        public static void Main(string[] args)
+        {
+            int option, option1;
+            string bookName = "default";
+            AddressBookBuilder addressBook = new AddressBookBuilder();
 
-        static void Main(string[] args)
-        {
-            Program p = new Program();
-            p.setFname();
-            p.setLname();
-            p.setAdd();
-            p.setCity();
-            p.setState();
-            p.setZip();
-            p.setPhoneNumber();
-            p.setEmail();
-
-            p.display();
-        }
-
-        void display()
-        {
-            Console.WriteLine("FirstName  =" + getFname());
-            Console.WriteLine("Last Name : " + getLname());
-            Console.WriteLine("Address :" + getAdd());
-            Console.WriteLine("CIty :" + getCity());
-            Console.WriteLine("State :" + getState());
-            Console.WriteLine("ZipCode :" + getZip());
-            Console.WriteLine("Phone Number : " + getPhoneNumber());
-            Console.WriteLine("Email Id : " + getEmail());
-        }
-        string getFname()
-        {
-            return firstName;
-
-        }
-        public void setFname()
-        {
-            Console.WriteLine("Please enter the First name");
-            firstName = Console.ReadLine();
-        }
-        string getLname()
-        {
-            return lastName;
-        }
-        public void setLname()
-        {
-            Console.WriteLine("Please enter the last name");
-            lastName = Console.ReadLine();
-        }
-        string getAdd()
-        {
-            return address;
-        }
-        public void setAdd()
-        {
-            Console.WriteLine("Please enter the Address :");
-            address = Console.ReadLine();
-        }
-        string getCity()
-        {
-            return city;
-        }
-        public void setCity()
-        {
-            Console.WriteLine("Please enter the City :");
-            city = Console.ReadLine();
-        }
-        string getState()
-        {
-            return state;
-        }
-        public void setState()
-        {
-            Console.WriteLine("Please enter the State :");
-            state = Console.ReadLine();
-        }
-        int getZip()
-        {
-            return zipCode;
-        }
-        public void setZip()
-        {
-            Console.WriteLine("Please enter the ZipCode :");
-            try
+            Console.WriteLine("1. Would you like to work on existing addressbook ? if yes press 1");
+            Console.WriteLine("2. Would you like to add  new addressbook ? if yes press 2");
+            option1 = Convert.ToInt32(Console.ReadLine());
+            switch (option1)
             {
-
-                zipCode = int.Parse(Console.ReadLine());
+                case 1:
+                    addressBook.AddAddressBook(bookName);
+                    break;
+                case 2:
+                    Console.WriteLine("Enter Name Of New Addressbook You want to create : ");
+                    bookName = Console.ReadLine();
+                    addressBook.AddAddressBook(bookName);
+                    break;
+                case 3:
+                    Console.WriteLine("Enter first Name of contact which to be edited");
+                    string NameToEdit = Console.ReadLine();
+                    addressBook.EditContact(NameToEdit);
+                    break;
+                case 4:
+                    Console.WriteLine("Enter Name For New AddressBook");
+                    string newAddressBook = Console.ReadLine();
+                    addressBook.AddAddressBook(newAddressBook);
+                    Console.WriteLine("Would you like to Switch to " + newAddressBook);
+                    Console.WriteLine("1.Yes \n2.No");
+                    int c = Convert.ToInt32(Console.ReadLine());
+                    if (c == 1)
+                    {
+                        bookName = newAddressBook;
+                    }
+                    break;
+                case 5:
+                    Console.WriteLine("Enter Name Of AddressBook From Below List");
+                    foreach (KeyValuePair<string, AddressBookBuilder> item in addressBook.GetAddressBook())
+                    {
+                        Console.WriteLine(item.Key);
+                    }
+                    while (true)
+                    {
+                        bookName = Console.ReadLine();
+                        if (addressBook.GetAddressBook().ContainsKey(bookName))
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            Console.WriteLine("No such AddressBook found. Try Again.");
+                        }
+                    }
+                    break;
+                default:
+                    Console.WriteLine("wrong input");
+                    break;
             }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
+            Console.WriteLine("Do you want to continue?  press 1 if yes,press 0 for Exit");
+            option = Convert.ToInt32(Console.ReadLine());
+        
+            while (option != 0);
             }
         }
-        int getPhoneNumber()
-        {
-            return phoneNumber;
-        }
-        public void setPhoneNumber()
-        {
-            Console.WriteLine("Please enter the PhoneNumber : ");
-            try
-            {
-                phoneNumber = int.Parse(Console.ReadLine());
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
-        }
-        string getEmail()
-        {
-            return emailId;
-        }
-        public void setEmail()
-        {
-            Console.WriteLine("Please enter the Email Id :");
-            emailId = Console.ReadLine();
-        }
-    }
 }
+
+
+
+               
